@@ -191,7 +191,7 @@ class Recipes extends CI_Model {
         // populate it.
         function create()
         {
-            $names = ['id','name','description','price','picture','category'];
+            $names = ['menu_id','inventory_id','quantity'];
             $object = new StdClass;
             foreach ($names as $name)
                 $object->$name = "";
