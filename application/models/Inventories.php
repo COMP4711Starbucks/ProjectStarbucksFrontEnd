@@ -112,7 +112,7 @@ class Inventories extends CI_Model {
         $data = get_object_vars($record);
         $this->rest->initialize(array('server' => REST_SERVER));
         $this->rest->option(CURLOPT_PORT, REST_PORT);
-        $retrieved = $this->rest->put('inventory/maintenance/item/id/' . $data['id'], $data);
+        $retrieved = $this->rest->put('inventory/maintenance/item/id/' . $record->id, $data);
     }
     
     // Add a record to the DB
@@ -121,6 +121,6 @@ class Inventories extends CI_Model {
         $data = get_object_vars($record);
         $this->rest->initialize(array('server' => REST_SERVER));
         $this->rest->option(CURLOPT_PORT, REST_PORT);
-        $retrieved = $this->rest->post('inventory/maintenance/item/id/' . $data['id'], $data);
+        $retrieved = $this->rest->post('inventory/maintenance/item/id/' . $record->id, $data);
     }
 }
