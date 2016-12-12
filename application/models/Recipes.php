@@ -230,16 +230,16 @@ class Recipes extends CI_Model {
             $data = get_object_vars($record);
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $data['menu_id'].'-'.$data['inventory_id'], $data);
+            $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $record->menu_id.'-'.$record->inventory_id, $data);
         }
         
         // Add a record to the DB
-        function add($record)
+         function add($record)
         {
             $data = get_object_vars($record);
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->post('recipe/maintenance/item/id/' . $data['menu_id'].'-'.$data['inventory_id'], $data);
+            $retrieved = $this->rest->post('recipe/maintenance/item/id/' . $record->menu_id.'-'.$record->inventory_id, $data);
         }
 }
 
