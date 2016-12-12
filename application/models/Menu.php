@@ -11,17 +11,26 @@
  *
  * @author TianyangLiu
  */
-class Menu extends MY_Model{
+
+/**
+ * Modified to use REST client to get port data from our server.
+ */
+define('REST_SERVER', 'http://backend.local');  // the REST server host
+define('REST_PORT', $_SERVER['SERVER_PORT']);   // the port you are running the server on
+
+class Menu extends CI_Model{
     // Constructor
     public function __construct(){
         parent::__construct();
+        $this->load->library(['curl', 'format', 'rest']);
     }
     
-    public function all(){
-        $name = "name";
-        $this->db->order_by($name, 'asc');
-        $query = $this->db->get($this->_tableName);
-        return $query->result();
+    // Return all records as an array of objects
+    function all()
+    {
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        return $this->rest->get('menu/maintenance');
     }
     
     function rules() {
@@ -33,22 +42,56 @@ class Menu extends MY_Model{
         return $config;
     }
     
-    /*
-    // find and return item by name
-    public function find($name){
-        // replace '-', '&' symbols
-        $target = preg_replace("/[\s-&]/", "", $name);
-        $noItemIsFound = array('name' => 'Cannot find item');
-        
-        foreach($this->data as $d){
-            $orgin = preg_replace("/[\s&-]/", "", $d['name']);
-            if($orgin == $target){
-                return $d;
-            }
-        }
-        
-        return $noItemIsFound;
+    // Retrieve an existing DB record as an object
+    function get($key, $key2 = null)
+    {
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            return $this->rest->get('menu/maintenance/item/id/' . $key);
     }
-     * 
-     */
+    
+    // Create a new data object.
+    // Only use this method if intending to create an empty record and then
+    // populate it.
+    function create()
+    {
+        $names = ['name','description','price','picture'];
+        $object = new StdClass;
+        foreach ($names as $name)
+            $object->$name = "";
+        return $object;
+    }
+    
+    // Delete a record from the DB
+    function delete($key, $key2 = null)
+    {
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            return $this->rest->delete('menu/maintenance/item/id/' . $key);
+    }
+    
+    // Determine if a key exists
+    function exists($key, $key2 = null)
+    {
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $result = $this->rest->get('menu/maintenance/item/id/' . $key);
+            return ! empty($result);
+    }
+    
+    // Update a record in the DB
+    function update($record)
+    {
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $retrieved = $this->rest->put('menu/maintenance/item/id/' . $record['code'], $record);
+    }
+    
+    // Add a record to the DB
+    function add($record)
+    {
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $retrieved = $this->rest->post('menu/maintenance/item/id/' . $record['code'], $record);
+    }
 }
