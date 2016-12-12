@@ -17,7 +17,7 @@ class Detail extends Application{
         $this->load->helper('formfields');
     }
     
-    public function detail($id)
+    function detail($id)
     {       
         $userrole = $this->session->userdata('userrole');
         if ($userrole == 'guest') {
@@ -30,13 +30,13 @@ class Detail extends Application{
         $this->render(); 
     }
     
-    public function cancel(){
+   function cancel(){
         $this->session->unset_userdata('key');
         $this->session->unset_userdata('record');
         redirect('/inventory');
     }
     
-    public function delete($id) {
+    function delete($id) {
         $key = $id;
 
         // only delete if editing an existing record
@@ -47,7 +47,7 @@ class Detail extends Application{
         redirect('inventory');
 }
     
-    public function add()
+    function add()
     {       
         $key = NULL;
         $record = $this->inventories->create();
@@ -57,13 +57,13 @@ class Detail extends Application{
         $this->edit();
     }
     
-    public function edit($id=null) {    
+    function edit($id=null) {    
         // try the session first    
         $key = $this->session->userdata('key');
         $record = $this->session->userdata('record');
         // if not there, get them from the database   
         if (empty($record)) {            
-            $record = $this->inventories->get($id);           
+            $record = $this->inventories->get($id);
             $key = $id;           
             $this->session->set_userdata('key',$id);            
             $this->session->set_userdata('record',$record);   
@@ -82,7 +82,7 @@ class Detail extends Application{
         $this->render();
     }
     
-    public function save() {
+    function save() {
         // try the session first
         $key = $this->session->userdata('key');
         $record = $this->session->userdata('record');
@@ -130,7 +130,7 @@ class Detail extends Application{
         redirect('inventory');
 }
     
-    public function show_any_errors() {
+    function show_any_errors() {
         $result = '';
         if (empty($this->error_messages)) {
             $this->data['error_messages'] = '';
