@@ -78,10 +78,14 @@ class Menu extends CI_Model{
     // Determine if a key exists
     function exists($key, $key2 = null)
     {
-        $this->rest->initialize(array('server' => REST_SERVER));
-        $this->rest->option(CURLOPT_PORT, REST_PORT);
-        $result = $this->rest->get('/menu/maintenance/item/id/' . $key);
-        return ! empty($result);
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $result = $this->rest->get('inventory/maintenance/check/id/' . $key);
+            if($result->error == 'ok'){
+                return false; 
+            }else{
+                return true;
+            }
     }
     
     // Update a record in the DB
