@@ -47,7 +47,7 @@ class Menu extends CI_Model{
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            return $this->rest->get('menu/maintenance/item/id/' . $key);
+            return $this->rest->get('/menu/maintenance/item/id/' . $key);
     }
     
     // Create a new data object.
@@ -67,7 +67,7 @@ class Menu extends CI_Model{
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            return $this->rest->delete('menu/maintenance/item/id/' . $key);
+            return $this->rest->delete('/menu/maintenance/item/id/' . $key);
     }
     
     // Determine if a key exists
@@ -75,7 +75,7 @@ class Menu extends CI_Model{
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $result = $this->rest->get('menu/maintenance/item/id/' . $key);
+            $result = $this->rest->get('/menu/maintenance/item/id/' . $key);
             return ! empty($result);
     }
     
@@ -84,7 +84,7 @@ class Menu extends CI_Model{
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->put('menu/maintenance/item/id/' . $record['code'], $record);
+            $retrieved = $this->rest->put('/menu/maintenance/item/id/' . $record['code'], $record);
     }
     
     // Add a record to the DB
@@ -92,6 +92,6 @@ class Menu extends CI_Model{
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->post('menu/maintenance/item/id/' . $record['code'], $record);
+            $retrieved = $this->rest->post('/menu/maintenance/item/id/' . $record['code'], $record);
     }
 }
