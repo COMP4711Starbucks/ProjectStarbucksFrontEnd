@@ -203,7 +203,7 @@ class Recipes extends CI_Model {
         {
                 $this->rest->initialize(array('server' => REST_SERVER));
                 $this->rest->option(CURLOPT_PORT, REST_PORT);
-                return $this->rest->delete('recipe/maintenance/item/id/' . $key);
+                return $this->rest->delete('recipe/maintenance/item/id/' . $key . '-' . $key2);
         }
         
         // Determine if a key exists
@@ -215,12 +215,11 @@ class Recipes extends CI_Model {
                 return ! empty($result);
         }
         
-        // Update a record in the DB
         function update($record)
-        {
+        {       $data = get_object_vars($record);
                 $this->rest->initialize(array('server' => REST_SERVER));
                 $this->rest->option(CURLOPT_PORT, REST_PORT);
-                $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $record['code'], $record);
+                $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $record->menu_id.'-'.$record->inventory_id, $data);
         }
         
         // Add a record to the DB
