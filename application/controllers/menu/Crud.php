@@ -125,12 +125,17 @@ class Crud extends Application{
         $record = $this->session->userdata('record');
         // only delete if editing an existing record
         if (! empty($record)) {
+            $result = $this->recipes->getItems($key);
+            
             $this->menu->delete($key);
-            $this->recipes->delete($key);
+            
+            foreach($result as $r){
+                $this->recipes->deleteItems($key);
+            }
         }
         
         $this->session->unset_userdata('key');
-        $record = $this->session->unset_userdata('record');
+        $this->session->unset_userdata('record');
         
         redirect('/menu');
     }

@@ -206,6 +206,16 @@ class Recipes extends CI_Model {
                 return $this->rest->delete('recipe/maintenance/item/id/' . $key . '-' . $key2);
         }
         
+        public function deleteItems($id){
+           $result = $this->all();
+            // iterate over the data until we find the one we want
+            foreach ($result as $record){
+                if ( $record->menu_id == $id){
+                    $this->delete($id,$record->inventory_id);
+                }
+            }
+	}
+        
         // Determine if a key exists
         function exists($key, $key2 = null)
         {
@@ -216,18 +226,20 @@ class Recipes extends CI_Model {
         }
         
         function update($record)
-        {       $data = get_object_vars($record);
-                $this->rest->initialize(array('server' => REST_SERVER));
-                $this->rest->option(CURLOPT_PORT, REST_PORT);
-                $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $record->menu_id.'-'.$record->inventory_id, $data);
+        {       
+            $data = get_object_vars($record);
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $retrieved = $this->rest->put('recipe/maintenance/item/id/' . $data['menu_id'].'-'.$data['inventory_id'], $data);
         }
         
         // Add a record to the DB
         function add($record)
         {
-                $this->rest->initialize(array('server' => REST_SERVER));
-                $this->rest->option(CURLOPT_PORT, REST_PORT);
-                $retrieved = $this->rest->post('recipe/maintenance/item/id/' . $record['code'], $record);
+            $data = get_object_vars($record);
+            $this->rest->initialize(array('server' => REST_SERVER));
+            $this->rest->option(CURLOPT_PORT, REST_PORT);
+            $retrieved = $this->rest->post('recipe/maintenance/item/id/' . $data['menu_id'].'-'.$data['inventory_id'], $data);
         }
 }
 

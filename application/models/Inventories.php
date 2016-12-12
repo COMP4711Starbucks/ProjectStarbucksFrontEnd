@@ -70,7 +70,7 @@ class Inventories extends CI_Model {
     {
             $this->rest->initialize(array('server' => REST_SERVER));
             $this->rest->option(CURLOPT_PORT, REST_PORT);
-            return $this->rest->get('/maintenance/item/id/' . $key);
+            return $this->rest->get('inventory/maintenance/item/id/' . $key);
     }
     
     // Create a new data object.
@@ -78,7 +78,7 @@ class Inventories extends CI_Model {
     // populate it.
     function create()
     {
-        $names = ['id','name','description','price','picture','category'];
+        $names = ['name','quantity'];
         $object = new StdClass;
         foreach ($names as $name)
             $object->$name = "";
@@ -88,33 +88,35 @@ class Inventories extends CI_Model {
     // Delete a record from the DB
     function delete($key, $key2 = null)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            return $this->rest->delete('/maintenance/item/id/' . $key);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        return $this->rest->delete('inventory/maintenance/item/id/' . $key);
     }
     
     // Determine if a key exists
     function exists($key, $key2 = null)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $result = $this->rest->get('/maintenance/item/id/' . $key);
-            return ! empty($result);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $result = $this->rest->get('inventory/maintenance/item/id/' . $key);
+        return ! empty($result);
     }
     
     // Update a record in the DB
     function update($record)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->put('/maintenance/item/id/' . $record['code'], $record);
+        $data = get_object_vars($record);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $retrieved = $this->rest->put('inventory/maintenance/item/id/' . $data['id'], $data);
     }
     
     // Add a record to the DB
     function add($record)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $retrieved = $this->rest->post('/maintenance/item/id/' . $record['code'], $record);
+        $data = get_object_vars($record);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $retrieved = $this->rest->post('inventory/maintenance/item/id/' . $data['id'], $data);
     }
 }
