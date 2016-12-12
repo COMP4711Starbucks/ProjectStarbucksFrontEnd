@@ -8,9 +8,10 @@ class Welcome extends Application{
     }
     
     public function index(){
-        $this->data['pagebody'] = 'menu';
+        
         $result = $this->menu->all();
         $this->data['content'] = $result;
+        $this->data['pagebody'] = 'menu';
         $this->render();
     }
     
