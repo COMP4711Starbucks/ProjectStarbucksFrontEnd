@@ -88,9 +88,9 @@ class Inventories extends CI_Model {
     // Delete a record from the DB
     function delete($key, $key2 = null)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            return $this->rest->delete('inventory/maintenance/item/id/' . $key);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        return $this->rest->delete('inventory/maintenance/item/id/' . $key);
     }
     
     // Determine if a key exists
