@@ -96,10 +96,14 @@ class Inventories extends CI_Model {
     // Determine if a key exists
     function exists($key, $key2 = null)
     {
-            $this->rest->initialize(array('server' => REST_SERVER));
-            $this->rest->option(CURLOPT_PORT, REST_PORT);
-            $result = $this->rest->get('inventory/maintenance/item/id/' . $key);
-            return ! empty($result);
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $result = $this->rest->get('inventory/maintenance/check/id/' . $key);
+        if($result->error == 'ok'){
+            return false; 
+        }else{
+            return true;
+        }
     }
     
     // Update a record in the DB
@@ -114,8 +118,9 @@ class Inventories extends CI_Model {
     // Add a record to the DB
     function add($record)
     {
+        $data = get_object_vars($record);
         $this->rest->initialize(array('server' => REST_SERVER));
         $this->rest->option(CURLOPT_PORT, REST_PORT);
-        $retrieved = $this->rest->post('inventory/maintenance/item/id/' . $record['id'], $record);
+        $retrieved = $this->rest->post('inventory/maintenance/item/id/' . $data['id'], $data);
     }
 }
