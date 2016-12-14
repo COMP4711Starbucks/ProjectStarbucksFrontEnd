@@ -13,17 +13,3 @@
         <p>There are {recipe_counts} of recipes known</p>
     </div>
 </div>
-<div class="panel panel-primary">
-    <!-- Default panel contents -->
-    <div class="panel-heading">something</div>
-    <div class="panel-body">
-        <p>...</p>
-    </div>
-</div>
-<div class="panel panel-primary">
-    <!-- Default panel contents -->
-    <div class="panel-heading">something</div>
-    <div class="panel-body">
-        <p>...</p>
-    </div>
-</div>
